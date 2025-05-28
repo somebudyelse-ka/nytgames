@@ -1,2 +1,1 @@
-let result = {
-{"id":1545,"solution":"polar","print_date":"2025-05-28","days_since_launch":1439,"editor":"Tracy Bennett"}};
+let result = {"id":1545,"solution":"polar","print_date":"2025-05-28","days_since_launch":1439,"editor":"Tracy Bennett"}
