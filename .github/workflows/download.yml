@@ -30,5 +30,6 @@ jobs:
         run: |
           git config --global user.email "somebudyelse-ka@users.noreply.github.com"
           git config --global user.name "somebudyelse-ka"
+          git add
           git commit -am "Update JSON"
           git push
