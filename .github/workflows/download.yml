@@ -23,9 +23,8 @@ jobs:
       # Runs a single command using the runners shell
       - name: "Download today's JSON file"
         run: |
-          echo "let result = {" > "$(date +%F).js"
+          echo -n "let result = " > "$(date +%F).js"
           curl -s "https://www.nytimes.com/svc/wordle/v2/$(date +%F).json" >> "$(date +%F).js"
-          echo "};" >> "$(date +%F).js"
       - name: Push
         run: |
           git config --global user.email "somebudyelse-ka@users.noreply.github.com"
