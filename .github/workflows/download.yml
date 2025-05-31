@@ -23,8 +23,23 @@ jobs:
       # Runs a single command using the runners shell
       - name: "Download today's JSON file"
         run: |
-          echo -n "let result = " > "$(date +%F).js"
+          echo -e -n "callback({\n  mini:" > "$(date +%F).js"
+          echo -n $(curl -s "https://www.nytimes.com/svc/crosswords/v6/puzzle/mini.json") >> "$(date +%F).js"
+          echo -e -n ",\n  connections:" >> "$(date +%F).js"
+          curl -s "https://www.nytimes.com/svc/connections/v2/$(date +%F).json" >> "$(date +%F).js"
+          echo -e -n ",\n  spellingbee:" >> "$(date +%F).js"
+          curl -s "https://www.nytimes.com/puzzles/spelling-bee" | echo -n $(grep -o -P '(?<=window\.gameData \= ).*?(?=\<\/script)') >> "$(date +%F).js"
+          echo -e -n ",\n  wordle:" >> "$(date +%F).js"
           curl -s "https://www.nytimes.com/svc/wordle/v2/$(date +%F).json" >> "$(date +%F).js"
+          echo -e -n ",\n  letterboxed:" >> "$(date +%F).js"
+          curl -s "https://www.nytimes.com/puzzles/letter-boxed" | echo -n $(grep -o -P '(?<=window\.gameData \= ).*?(?=\<\/script)') >> "$(date +%F).js"
+          echo -e -n ",\n  tiles:" >> "$(date +%F).js"
+          curl -s "https://www.nytimes.com/puzzles/tiles" | echo -n $(grep -o -P '(?<=window\.gameData \= ).*?(?=\<\/script)') >> "$(date +%F).js"
+          echo -e -n ",\n  strands:" >> "$(date +%F).js"
+          curl -s "https://www.nytimes.com/svc/strands/v2/$(date +%F).json" >> "$(date +%F).js"
+          echo -e -n ",\n  sudoku:" >> "$(date +%F).js"
+          curl -s "https://www.nytimes.com/puzzles/sudoku" | echo -n $(grep -o -P '(?<=window\.gameData \= ).*?(?=\<\/script)') >> "$(date +%F).js"
+          echo -e -n "\n});" >> "$(date +%F).js"
       - name: Push
         run: |
           git config --global user.email "somebudyelse-ka@users.noreply.github.com"
